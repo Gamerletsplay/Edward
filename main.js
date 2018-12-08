@@ -65,6 +65,7 @@ bot.on("message", async message => {
         .addField(`${BotSettings.prefix}kick`,`Kickt einen bestimmten User`)
         .addField(`${BotSettings.prefix}ban`,`Bannt einen bestimmten User`)
         .addField(`${BotSettings.prefix}say`,`Lass den Bot für dich sprechen.`)
+        .addField(`${BotSettings.prefix}eval`,`Führt Code aus.`)
         .setTimestamp()
         message.channel.send(help)
     }
