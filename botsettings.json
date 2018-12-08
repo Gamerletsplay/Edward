@@ -1,0 +1,35 @@
+{
+    "token": "NTIwNjA0NTM1ODg3MjMzMDI0.Duwakw.uSDSQNKQdaJgObukI7b6OigG8l0",
+    "prefix": "e!",
+    "OwnerID": "506363257632718858",
+
+
+    "SpielTypen": {
+        "0": "Spielt",
+        "1": "Streamt",
+        "2": "Hört auf",
+        "3": "Schaut"
+    },
+
+    "StatusTypen": {
+        "online": "Online",
+        "idle": "Abwesend",
+        "dnd": "Bitte nicht stören",
+        "offline": "Offline"
+    },
+
+    "Date_Name": {
+        "Jan": "Januar",
+        "Feb": "Februar",
+        "Mar": "März",
+        "Apr": "April",
+        "May": "Mai",
+        "Jun": "Juni",
+        "Jul": "Juli",
+        "Aug": "August",
+        "Sep": "September",
+        "Oct": "Oktober",
+        "Nov": "November",
+        "Dec": "Dezember"
+    }
+}
