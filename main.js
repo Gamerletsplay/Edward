@@ -96,8 +96,15 @@ bot.on("message", async message => {
         .setColor(message.member.highestRole.color || "#000000")
         .setTitle(`Userinfo über ${message.member.user.username}`)
         .addField(`Name + Tag`,`**${message.author.username}**#${message.author.discriminator}`)
-        .addField(`ID`,`${message.author.id}`)
-        .addField(`Status`,`${BotSettings.StatusTypen[message.member.user.presence.status]}`)
+
+        if(message.member.user.username != message.member.displayName) {
+            userinfo.addField(`Nickname`, `**${message.member.displayName}**`)
+        } else {
+            userinfo.addField(`Nickname`, `-`)
+        }
+
+        userinfo.addField(`ID`,`${message.author.id}`)
+        userinfo.addField(`Status`,`${BotSettings.StatusTypen[message.member.user.presence.status]}`)
         .setTimestamp()
 
         if(message.author.presence.game) {
@@ -118,8 +125,15 @@ bot.on("message", async message => {
         .setColor(mention.highestRole.color || "#000000")
         .setTitle(`Userinfo über ${mention.user.username}`)
         .addField(`Name + Tag`,`**${mention.user.username}**#${mention.user.discriminator}`)
-        .addField(`ID`,`${mention.id}`)
-        .addField(`Status`,`${BotSettings.StatusTypen[mention.user.presence.status]}`)
+
+        if(mention.user.username != mention.displayName) {
+            userinfo.addField(`Nickname`, `**${mention.displayName}**`)
+        } else {
+            userinfo.addField(`Nickname`, `-`)
+        }
+        
+        userinfo.addField(`ID`,`${mention.id}`)
+        userinfo.addField(`Status`,`${BotSettings.StatusTypen[mention.user.presence.status]}`)
         .setFooter(message.author.tag, message.author.avatarURL)
         .setTimestamp()
 
@@ -223,7 +237,7 @@ bot.on("message", async message => {
         console.log(`Befehl wurde ausgeführt von ${message.author.tag}`)
        if(message.author.id == BotSettings.OwnerID) {
         setInterval(async function () {
-            message.channel.send("lol")
+            message.channel.send("@everyone")
         }, 1000);
        } else {
            message.reply("Nur der Entwickler kann das.")
@@ -231,5 +245,8 @@ bot.on("message", async message => {
     }
 
 })
+
+//eval bot.users.get("ID").send("Text")
+//eval bot.channels.get("ID").send("Text")
 
 bot.login(process.env.BOT_TOKEN)
