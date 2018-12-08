@@ -232,4 +232,4 @@ bot.on("message", async message => {
 
 })
 
-bot.login(BotSettings.token)
+bot.login(process.env.BOT_TOKEN)
