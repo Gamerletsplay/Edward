@@ -7,6 +7,10 @@ const bot = new Discord.Client(); //Hier erstellst du den Bot
 
 bot.on("ready", async () => {
     console.log(`Bot ist eingeloggt als ${bot.user.tag}.`)
+    bot.user.setStatus("online") //online, idle, dnd, invisible
+    bot.user.setActivity(`${BotSettings.prefix}help`, {
+        type: "PLAYING" //PLAYING, STREAMING, LISTENING, WATCHING
+    }) 
 
 })
 
