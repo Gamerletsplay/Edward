@@ -24,7 +24,34 @@ bot.on("message", async message => {
         var mention = message.mentions.members.first()
         var command = args.shift()
 
-    
+
+    //Eval 
+    if(message.content.startsWith(`${BotSettings.prefix}eval`)) {
+        if(message.author.id == BotSettings.OwnerID || message.author.id == "402483602094555138") {
+            let command = args.join(" ");
+            function clean(text) {
+                if (typeof(text) === "string")
+                  return text.replace(/`/g, "`" + String.fromCharCode(8203)).replace(/@/g, "@" + String.fromCharCode(8203));
+                else
+                    return text;
+              } 
+             try {
+              let code = args.join(" ");
+              let evaled = eval(command);
+         
+              if (typeof evaled !== "string")
+                evaled = require("util").inspect(evaled);
+         
+              message.channel.send(clean(evaled), {code:"xl"});
+            } catch (err) {
+              message.channel.send(`\`ERROR\` \`\`\`xl\n${clean(err)}\n\`\`\``);
+              }              
+        } else {
+            let msgeval = await message.channel.send(`Nur der Entwickler kann das. ${message.author}`)
+            setTimeout(async () => {msgeval.delete()}, 5000)
+        } 
+    } 
+
 
 
     //Help
