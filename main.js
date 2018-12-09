@@ -253,7 +253,7 @@ bot.on("message", async message => {
             let restartchannel = message.channel
 
             bot.destroy()
-            .then(bot.login(BotSettings.token))
+            .then(bot.login(process.env.BOT_TOKEN))
             message.channel.send("Restarting...")
             bot.on("ready", async () => restartchannel.send("Ich bin wieder da!"))
         } else {
@@ -279,4 +279,4 @@ bot.on("message", async message => {
 //eval bot.users.get("ID").send("Text")
 //eval bot.channels.get("ID").send("Text")
 
-bot.login(BotSettings.token)
+bot.login(process.env.BOT_TOKEN)
