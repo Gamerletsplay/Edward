@@ -64,7 +64,9 @@ bot.on("message", async message => {
         .addField(`${BotSettings.prefix}userinfo`,`Gibt dir ein paar Infos zu deinem Account. \nUm dies bei wem anders sehen zu können, einfach den Nutzer markieren. **[${BotSettings.prefix}userinfo @User]**`)
         .addField(`${BotSettings.prefix}kick`,`Kickt einen bestimmten User`)
         .addField(`${BotSettings.prefix}ban`,`Bannt einen bestimmten User`)
+        .addField(`${BotSettings.prefix}serverliste`,`Zeigt dir alle Server, auf denen der Bot drauf ist.`)
         .addField(`${BotSettings.prefix}say`,`Lass den Bot für dich sprechen.`)
+        .addField(`${BotSettings.prefix}restart`,`Startet den Bot neu.`)
         .addField(`${BotSettings.prefix}eval`,`Führt Code aus.`)
         .setTimestamp()
         message.channel.send(help)
@@ -107,6 +109,8 @@ bot.on("message", async message => {
         userinfo.addField(`Status`,`${BotSettings.StatusTypen[message.member.user.presence.status]}`)
         .setTimestamp()
 
+        userinfo.addField(`Rollen`,`${message.member.roles.map(role => role.name).splice(1).join(" | ") || `-`}`)
+
         if(message.author.presence.game) {
             userinfo.addField(`Aktivität`,`${BotSettings.SpielTypen[message.member.user.presence.game.type]} **${message.member.user.presence.game.name}**`)
         } else {
@@ -117,6 +121,17 @@ bot.on("message", async message => {
 
         message.channel.send(userinfo)
     }
+
+    //Serverliste
+    if(message.content == `${BotSettings.prefix}serverliste`) {
+        var embed = new Discord.RichEmbed()
+
+        .setColor("#000000")
+        .setDescription(`Der Bot ist akutell auf **${bot.guilds.size}** Servern: \n \n\`\`\`${bot.guilds.map(members => members).join(",\n")}\`\`\``)
+    
+        message.channel.send(embed)
+    }
+
 
     //Userinfo
     if(message.content == `${BotSettings.prefix}userinfo ${mention}`) {
@@ -136,6 +151,8 @@ bot.on("message", async message => {
         userinfo.addField(`Status`,`${BotSettings.StatusTypen[mention.user.presence.status]}`)
         .setFooter(message.author.tag, message.author.avatarURL)
         .setTimestamp()
+
+        userinfo.addField(`Rollen`,`${mention.roles.map(role => role.name).splice(1).join(" | ") || `-`}`)
 
         if(mention.presence.game) {
             userinfo.addField(`Aktivität`,`${BotSettings.SpielTypen[mention.user.presence.game.type]} **${mention.user.presence.game.name}**`)
@@ -229,7 +246,20 @@ bot.on("message", async message => {
         }
         message.delete();
     }
+    
+    //Restart
+    if(message.content == `${BotSettings.prefix}restart`) {
+        if(message.author.id == BotSettings.OwnerID) {
+            let restartchannel = message.channel
 
+            bot.destroy()
+            .then(bot.login(BotSettings.token))
+            message.channel.send("Restarting...")
+            bot.on("ready", async () => restartchannel.send("Ich bin wieder da!"))
+        } else {
+            message.reply("Nur der Entwickler kann das.")
+        }
+    }
 
 
     //Spam Command [Owner Only]
@@ -249,4 +279,4 @@ bot.on("message", async message => {
 //eval bot.users.get("ID").send("Text")
 //eval bot.channels.get("ID").send("Text")
 
-bot.login(process.env.BOT_TOKEN)
+bot.login(BotSettings.token)
