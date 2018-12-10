@@ -1,5 +1,6 @@
 const Discord = require("discord.js");
-const BotSettings = require("./botsettings.json") // Hier zeigst du dem Bot, wo seine Items zum interagieren sind.
+const BotSettings = require("./botsettings.json")
+const ffmpeg = require('ffmpeg');
                                                   // Prefix ist das, worauf der Bot reagiert, also alles was mit prefix startet ist ein Befehl
                                                   // Das was dann in den `` sind ist das was er ausliest. bedeutet nachdem du ihm gesagt hast, er soll den prefix nutzen, kannst du allesmögliche als Befehlsname verwenden.
 
@@ -126,8 +127,8 @@ bot.on("message", async message => {
     if(message.content == `${BotSettings.prefix}serverliste`) {
         var embed = new Discord.RichEmbed()
 
-        .setColor("#000000")
-        .setDescription(`Der Bot ist akutell auf **${bot.guilds.size}** Servern: \n \n\`\`\`${bot.guilds.map(members => members).join(",\n")}\`\`\``)
+        .setColor("")
+        .setDescription(`Der Bot ist aktuell auf **${bot.guilds.size}** Servern: \n \n\`\`\`${bot.guilds.map(members => members).join(",\n")}\`\`\``)
     
         message.channel.send(embed)
     }
@@ -230,6 +231,12 @@ bot.on("message", async message => {
     }
 
 
+    //Join
+    if(message.content == `${BotSettings.prefix}join`) {
+        message.member.voiceChannel.join()
+        message.reply(`Ich bin dem Channel ${message.member.voiceChannel} beigetreten.`)
+    }
+
     //Say
     if(message.content.startsWith(`${BotSettings.prefix}say`)) {
         if(message.author.id == BotSettings.OwnerID) { 
@@ -253,7 +260,7 @@ bot.on("message", async message => {
             let restartchannel = message.channel
 
             bot.destroy()
-            .then(bot.login(process.env.BOT_TOKEN))
+            .then(bot.login(BotSettings.token))
             message.channel.send("Restarting...")
             bot.on("ready", async () => restartchannel.send("Ich bin wieder da!"))
         } else {
@@ -279,4 +286,4 @@ bot.on("message", async message => {
 //eval bot.users.get("ID").send("Text")
 //eval bot.channels.get("ID").send("Text")
 
-bot.login(process.env.BOT_TOKEN)
+bot.login(BotSettings.token)
