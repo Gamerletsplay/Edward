@@ -1,6 +1,7 @@
 const Discord = require("discord.js");
 const BotSettings = require("./botsettings.json")
 const ffmpeg = require('ffmpeg');
+const ping = require("ping");
                                                   // Prefix ist das, worauf der Bot reagiert, also alles was mit prefix startet ist ein Befehl
                                                   // Das was dann in den `` sind ist das was er ausliest. bedeutet nachdem du ihm gesagt hast, er soll den prefix nutzen, kannst du allesmögliche als Befehlsname verwenden.
 
@@ -76,6 +77,7 @@ bot.on("message", async message => {
 
     //Info Comamnd
     if(message.content == `${BotSettings.prefix}info`) {
+        ping.promise.probe('discordapp.com').then(result => {
         var info = new Discord.RichEmbed()
 
         .setColor("#5ac054")
@@ -84,12 +86,14 @@ bot.on("message", async message => {
         .setThumbnail(BotIcon)
         .addField(`Name + Tag`,`**${bot.user.username}**#${bot.user.discriminator}`,true)
         .addField(`Bot ID`, `${bot.user.id}`,true)
+        .addField(`Ping`,`**${result.time}**ms`)
         .addField(`Entwickler`,`${EntwicklerName}`,true)
         .addField(`Bot einladen`,"[Klick hier](https://discordapp.com/api/oauth2/authorize?client_id=520604535887233024&permissions=8&scope=bot)",true)
         .setFooter(message.author.tag, message.author.avatarURL)
         .setTimestamp()
 
         message.channel.send(info)
+        });
     }
 
     //Userinfo
