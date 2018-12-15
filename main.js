@@ -96,6 +96,7 @@ bot.on("message", async message => {
         });
     }
 
+
     //Userinfo
     if(message.content == `${BotSettings.prefix}userinfo`) {
         var userinfo = new Discord.RichEmbed()
@@ -272,16 +273,27 @@ bot.on("message", async message => {
         }
     }
 
+    //RollenAdd
+    if(message.content == `${BotSettings.prefix}roleadd`) {
+        if(message.author.id == BotSettings.OwnerID || message.member.hasPermission("ADMINISTRATOR")) { //Rechte Check
+            let Rolle = args.join(" ") //Rolle wird angegeben
+            if(message.guild.roles.find(rolle => rolle.name === Rolle)) { //Die Rolle mit dem Namen wird gesucht, also oben das args.join(" ") sucht die Rolle mit dem Namen den du angibst
 
-    //Spam Command [Owner Only]
-    if(message.content == `${BotSettings.prefix}spam`) {
-        console.log(`Befehl wurde ausgeführt von ${message.author.tag}`)
-       if(message.author.id == BotSettings.OwnerID) {
-        setInterval(async function () {
-            message.channel.send("@everyone")
-        }, 1000);
-       } else {
-           message.reply("Nur der Entwickler kann das.")
+                message.member.addRole(message.guild.roles.find(rolle => rolle.name === Rolle).id) //Hier fügt er dir die Rolle hinzu, insofern es sie gibt.
+                .then(message.channel.send(`Dir wurde die Rolle **${Rolle}** hinzugefügt. ${message.author}`)).catch(error => { //Catch bedeutet, das falls es einen Error gibt, er aufgefangen wird, und er dir den Error zeigt. Wie in der Konsole.
+                    if(error) message.channel.send(`Etwas ist schief gelaufen. ${error}`) //Hier zeigt er dir den Error
+                });
+            }
+        } else {
+            message.channel.send(`Für diesen Befehl brauchst du **Administrator** Rechte. ${message.author}`) //Falls die Rechte nicht da sind.
+        } if(args.length < 1) { //Hier checkt er die length, length bedeutet die Länge der Argumente die du angibst, und wenn diese unter 1 sind, sagt er dir, das du etwas angeben musst.
+
+            message.reply("Bitte gib eine Rolle an.")
+    
+       } else if(!message.guild.roles.find(role => role.name === Rolle)) { //Hier sucht er die Rolle, doch das ! gibt an falls er die Rolle NICHT finden kann.
+    
+           message.reply("Diese Rolle existiert nicht auf dem Server.")
+    
        }
     }
 
