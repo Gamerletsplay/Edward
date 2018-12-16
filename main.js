@@ -7,6 +7,7 @@ const ping = require("ping");
 
 const bot = new Discord.Client(); //Hier erstellst du den Bot
 
+//start up
 bot.on("ready", async () => {
     console.log(`Bot ist eingeloggt als ${bot.user.tag}.`)
     bot.user.setStatus("online") //online, idle, dnd, invisible
@@ -70,6 +71,8 @@ bot.on("message", async message => {
         .addField(`${BotSettings.prefix}say`,`Lass den Bot für dich sprechen.`)
         .addField(`${BotSettings.prefix}restart`,`Startet den Bot neu.`)
         .addField(`${BotSettings.prefix}eval`,`Führt Code aus.`)
+        .addField(`${BotSettings.prefix}keks`,`Du bekommst ein keks`)
+        .addField(`${BotSettings.prefix}Wlan`,`Du siehts die zukunft von alten leuten`)
         .setTimestamp()
         message.channel.send(help)
     }
@@ -295,6 +298,16 @@ bot.on("message", async message => {
            message.reply("Diese Rolle existiert nicht auf dem Server.")
     
        }
+    }
+
+     //keks
+     if(message.content == `${BotSettings.prefix}keks`) {
+        message.channel.send(`:cookie:`)
+    }
+
+    //Wlan
+    if(message.content == `${BotSettings.prefix}Wlan`) {
+        message.channel.send(`bruder ich nutze w-lan alder junge neue technologie oder?`)
     }
     
 
