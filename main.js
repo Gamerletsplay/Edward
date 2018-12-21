@@ -323,4 +323,4 @@ bot.on("message", async message => {
 //eval bot.users.get("ID").send("Text")
 //eval bot.channels.get("ID").send("Text")
 
-bot.login(BotSettings.token)
+bot.login(process.env.BOT_TOKEN)
