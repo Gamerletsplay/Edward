@@ -24,7 +24,7 @@ bot.on("message", async message => {
         var BotIcon = bot.user.avatarURL
         var EntwicklerName = `**${bot.users.get(BotSettings.OwnerID).username}**#${bot.users.get(BotSettings.OwnerID).discriminator}`
         var args = message.content.slice(BotSettings.prefix.length).trim().split(" ")
-        var mention = message.mentions.members.first()
+        var mention = message.mentions.members.first() || message.guild.members.get(args[0])
         var command = args.shift()
 
 
@@ -72,7 +72,7 @@ bot.on("message", async message => {
         .addField(`${BotSettings.prefix}restart`,`Startet den Bot neu.`)
         .addField(`${BotSettings.prefix}eval`,`Führt Code aus.`)
         .addField(`${BotSettings.prefix}keks`,`Du bekommst ein keks`)
-        .addField(`${BotSettings.prefix}Wlan`,`Du siehts die zukunft von alten leuten`)
+        .addField(`${BotSettings.prefix}event`,`Damit könnt ihr ein event ankündigen`)
         .setTimestamp()
         message.channel.send(help)
     }
@@ -305,15 +305,21 @@ bot.on("message", async message => {
         message.channel.send(`:cookie:`)
     }
 
-    //Wlan
-    if(message.content == `${BotSettings.prefix}Wlan`) {
-        message.channel.send(`bruder ich nutze w-lan alder junge neue technologie oder?`)
+    //Nachrichten 
+
+
+    //Event
+    if(message.content == `${BotSettings.prefix}event`){
+        message.channel.send(`Hi Leute was geht ich hoffe ihr schaut mal in <#523888826125647901> und bekommt schöne Ränge @everyone`)
     }
-    
 
- });
+    //spam
+    if(message.content == `${BotSettings.prefix}spam`){
+        message.channel.send(`Bitte unterlasse das spammem sonst wirst du gekickt`)
+    }
 
-
+});
+ 
 //eval bot.users.get("ID").send("Text")
 //eval bot.channels.get("ID").send("Text")
 
