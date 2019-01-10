@@ -26,6 +26,7 @@ bot.on("message", async message => {
         var args = message.content.slice(BotSettings.prefix.length).trim().split(" ")
         var mention = message.mentions.members.first() || message.guild.members.get(args[0])
         var command = args.shift()
+        var spieler = user.avatarURL
 
 
     //Eval 
@@ -73,6 +74,9 @@ bot.on("message", async message => {
         .addField(`${BotSettings.prefix}eval`,`Führt Code aus.`)
         .addField(`${BotSettings.prefix}keks`,`Du bekommst ein keks`)
         .addField(`${BotSettings.prefix}event`,`Damit könnt ihr ein event ankündigen`)
+        .addField(`${BotSettings.prefix}emoij`,`hier könnt ihr den bot emoijs schicken lassen`)
+        .addField(`${BotSettings.prefix}userinfo`,`hier seht ihr was für ein rang und was er spielt`) 
+        .addField       
         .setTimestamp()
         message.channel.send(help)
     }
@@ -137,41 +141,11 @@ bot.on("message", async message => {
 
         .setColor("")
         .setDescription(`Der Bot ist aktuell auf **${bot.guilds.size}** Servern: \n \n\`\`\`${bot.guilds.map(members => members).join(",\n")}\`\`\``)
+        setTimeout(async () => {msgsay.delete()}, 5000)
     
         message.channel.send(embed)
     }
 
-
-    //Userinfo
-    if(message.content == `${BotSettings.prefix}userinfo ${mention}`) {
-        var userinfo = new Discord.RichEmbed()
-
-        .setColor(mention.highestRole.color || "#000000")
-        .setTitle(`Userinfo über ${mention.user.username}`)
-        .addField(`Name + Tag`,`**${mention.user.username}**#${mention.user.discriminator}`)
-
-        if(mention.user.username != mention.displayName) {
-            userinfo.addField(`Nickname`, `**${mention.displayName}**`)
-        } else {
-            userinfo.addField(`Nickname`, `-`)
-        }
-        
-        userinfo.addField(`ID`,`${mention.id}`)
-        userinfo.addField(`Status`,`${BotSettings.StatusTypen[mention.user.presence.status]}`)
-        .setFooter(message.author.tag, message.author.avatarURL)
-        .setTimestamp()
-
-        userinfo.addField(`Rollen`,`${mention.roles.map(role => role.name).splice(1).join(" | ") || `-`}`)
-
-        if(mention.presence.game) {
-            userinfo.addField(`Aktivität`,`${BotSettings.SpielTypen[mention.user.presence.game.type]} **${mention.user.presence.game.name}**`)
-        } else {
-            userinfo.addField(`Aktivität`,`~`)
-        }  
-            userinfo.setThumbnail(mention.user.avatarURL)
-
-        message.channel.send(userinfo)
-    }
  
 
     //Kick
@@ -303,6 +277,7 @@ bot.on("message", async message => {
      //keks
      if(message.content == `${BotSettings.prefix}keks`) {
         message.channel.send(`:cookie:`)
+        setTimeout(async () => {msgsay.delete()}, 5000)
     }
 
     //Nachrichten 
@@ -311,16 +286,81 @@ bot.on("message", async message => {
     //Event
     if(message.content == `${BotSettings.prefix}event`){
         message.channel.send(`Hi Leute was geht ich hoffe ihr schaut mal in <#523888826125647901> und bekommt schöne Ränge @everyone`)
+        setTimeout(async () => {msgsay.delete()}, 5000)
+    }
+     
+    //emoijs senden
+    if(message.content == `${BotSettings.prefix}emoije`){
+        var emoijs = new Discord.RichEmbed()
+        .setColor(`#000000`)
+        .setTitle(`Hier seht ihr was für emoijs ihr mit den bot senden könnt`)
+        .setThumbnail(BotIcon)
+        .addField(`${BotSettings.prefix}cookie`,`hier sendet er ein keks`)
+        .addField(`${BotSettings.prefix}thumpsup`,`hier sendet er euch ein daumen hoch`)
+        .addField(`${BotSettings.prefix}thumpsdown`,`hier sendt er euch ein daumen runter`)
+        .addField(`${BotSettings.prefix}ok hand`,`hier krieg ihr ein ok`)
+        .addField(`${BotSettings.prefix}joy`,`hier bekommt ihr den lach emoji`)
+        .addField(`${BotSettings.prefix}sunglasses`,`hier bekommt ihr denn cool emoij`)
+        .addField(`${BotSettings.prefix}sob`,`hier sendet er euch den trauigen emoij`)
+        .setTitle(`Es kommen noch mehr aber bis her reichen die schreibt einfach ein paar ideen mir über pn ich freue mich schon :joy:`)
+        .setTimestamp()
+        .setAuthor(`Nico haller hat den bot programmiert`)
+    }
+    //emoijs
+    
+    //cookie
+    if(message.content == `${BotSettings.prefix}cookie`){
+        message.channel.send(`Der ist für dich mein freund :cookie:`)
+        setTimeout(async () => {msgsay.delete()}, 5000)
     }
 
+    //thumpsup 
+    if(message.content == `${BotSettings.prefix}thumpsup`){
+        message.channel.send(`hast du super gemacht :thumpsup:`)
+        setTimeout(async () => {msgsay.delete()}, 5000)
+    }
+
+    //thumpsdown
+    if(message.content == `${BotSettings.prefix}thumpsdown`){
+        message.channel.send(`das ist aber schlecht :thumpsdown:`)
+        setTimeout(async () => {msgsay.delete()}, 5000)
+    }
+
+    //joy
+    if(message.content == `${BotSettings.prefix}joy`){
+        message.channel.send(`hahaha das ist ja lustig :joy:`)
+        setTimeout(async () => {msgsay.delete()}, 5000)
+    }
+    
+    //sob
+    if(message.content == `${BotSettings.prefix}sob`){
+        message.channel.send(`ich muss heulen so trauig :sob:`)
+        setTimeout(async () => {msgsay.delete()}, 5000)
+    }
+
+    //sunglasses
+    if(message.content == `${BotSettings.prefix}sunglasses`){
+        message.channel.send(`ich bin echt cool in gegensatz zu dir :sunglasses:`)
+        setTimeout(async () => {msgsay.delete()}, 5000)
+    }
+
+    //ok_hand
+    if(message.content == `${BotSettings.prefix}okhand`){
+        message.channel.send(`das sieht voll ok aus super gemacht:ok_hand:`)
+        setTimeout(async () => {msgsay.delete()}, 5000)
+    }
+
+    
     //spam
     if(message.content == `${BotSettings.prefix}spam`){
         message.channel.send(`Bitte unterlasse das spammem sonst wirst du gekickt`)
+        setTimeout(async () => {msgsay.delete()}, 5000)
     }
+
 
 });
  
 //eval bot.users.get("ID").send("Text")
 //eval bot.channels.get("ID").send("Text")
 
-bot.login(process.env.BOT_TOKEN)
+bot.login(BotSettings.token)
